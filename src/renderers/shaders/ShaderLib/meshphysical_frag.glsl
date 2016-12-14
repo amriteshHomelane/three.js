@@ -42,6 +42,7 @@ varying vec3 vViewPosition;
 #include <metalnessmap_pars_fragment>
 #include <logdepthbuf_pars_fragment>
 #include <clipping_planes_pars_fragment>
+#include <progressive_sao_esm_pars_fragment>
 
 void main() {
 
@@ -69,7 +70,7 @@ void main() {
 
 	// modulation
 	#include <aomap_fragment>
-
+    #include <progressive_sao_esm_fragment>
 	vec3 outgoingLight = reflectedLight.directDiffuse + reflectedLight.indirectDiffuse + reflectedLight.directSpecular + reflectedLight.indirectSpecular + totalEmissiveRadiance;
 
 	gl_FragColor = vec4( outgoingLight, diffuseColor.a );

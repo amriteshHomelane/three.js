@@ -483,6 +483,8 @@ function WebGLProgram( renderer, code, material, parameters ) {
 
 			parameters.depthPacking ? "#define DEPTH_PACKING " + material.depthPacking : '',
 
+      parameters.progressiveSAOEnabled ? "#define PROGRESSIVE_SAO_ENABLED " : '',
+
 			'\n'
 
 		].filter( filterEmptyLine ).join( '\n' );

@@ -59,6 +59,8 @@ import normalmap_pars_fragment from './ShaderChunk/normalmap_pars_fragment.glsl'
 import packing from './ShaderChunk/packing.glsl';
 import premultiplied_alpha_fragment from './ShaderChunk/premultiplied_alpha_fragment.glsl';
 import project_vertex from './ShaderChunk/project_vertex.glsl';
+import progressive_sao_esm_fragment from './ShaderChunk/progressive_sao_esm_fragment.glsl';
+import progressive_sao_esm_pars_fragment from './ShaderChunk/progressive_sao_esm_pars_fragment.glsl';
 import roughnessmap_fragment from './ShaderChunk/roughnessmap_fragment.glsl';
 import roughnessmap_pars_fragment from './ShaderChunk/roughnessmap_pars_fragment.glsl';
 import shadowmap_pars_fragment from './ShaderChunk/shadowmap_pars_fragment.glsl';
@@ -168,6 +170,8 @@ export var ShaderChunk = {
 	packing: packing,
 	premultiplied_alpha_fragment: premultiplied_alpha_fragment,
 	project_vertex: project_vertex,
+  progressive_sao_esm_fragment: progressive_sao_esm_fragment,
+  progressive_sao_esm_pars_fragment: progressive_sao_esm_pars_fragment,
 	roughnessmap_fragment: roughnessmap_fragment,
 	roughnessmap_pars_fragment: roughnessmap_pars_fragment,
 	shadowmap_pars_fragment: shadowmap_pars_fragment,

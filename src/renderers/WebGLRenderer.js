@@ -108,6 +108,11 @@ function WebGLRenderer( parameters ) {
 	this.maxMorphTargets = 8;
 	this.maxMorphNormals = 4;
 
+  // progressiveSAO
+  this.progressiveSAOEnabled = true;
+  this.saoBuffer = null;
+  this.bufferSize = new THREE.Vector2(0,0);
+
 	// internal properties
 
 	var _this = this,
@@ -162,7 +167,7 @@ function WebGLRenderer( parameters ) {
 		_projScreenMatrix = new Matrix4(),
 
 		_vector3 = new Vector3(),
-		_matrix4 = new Matrix4(), 
+		_matrix4 = new Matrix4(),
 		_matrix42 = new Matrix4(),
 
 		// light arrays cache
@@ -1805,7 +1810,11 @@ function WebGLRenderer( parameters ) {
 
 		}
 
-		// skinning uniforms must be set even if material didn't change
+    // sao esm buffer
+    p_uniforms.set( _gl, _this, 'saoBuffer' );
+    p_uniforms.set( _gl, _this, 'bufferSize' );
+
+    // skinning uniforms must be set even if material didn't change
 		// auto-setting of texture unit for bone texture must go before other textures
 		// not sure why, but otherwise weird things happen
 
