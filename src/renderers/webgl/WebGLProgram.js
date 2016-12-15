@@ -484,6 +484,7 @@ function WebGLProgram( renderer, code, material, parameters ) {
 			parameters.depthPacking ? "#define DEPTH_PACKING " + material.depthPacking : '',
 
       parameters.progressiveSAOEnabled ? "#define PROGRESSIVE_SAO_ENABLED " : '',
+      parameters.progressiveESMEnabled ? "#define PROGRESSIVE_ESM_ENABLED " : '',
 
 			'\n'
 

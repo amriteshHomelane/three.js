@@ -34,7 +34,7 @@ function WebGLPrograms( renderer, capabilities ) {
 		"numDirLights", "numPointLights", "numSpotLights", "numHemiLights", "numRectAreaLights",
 		"shadowMapEnabled", "shadowMapType", "toneMapping", 'physicallyCorrectLights',
 		"alphaTest", "doubleSided", "flipSided", "numClippingPlanes", "numClipIntersection", "depthPacking",
-    "progressiveSAOEnabled"
+    "progressiveSAOEnabled", "progressiveESMEnabled"
 	];
 
 
@@ -201,7 +201,8 @@ function WebGLPrograms( renderer, capabilities ) {
 			flipSided: material.side === BackSide,
 
 			depthPacking: ( material.depthPacking !== undefined ) ? material.depthPacking : false,
-      progressiveSAOEnabled : renderer.progressiveSAOEnabled
+      progressiveSAOEnabled : renderer.progressiveSAOEnabled,
+      progressiveESMEnabled : renderer.progressiveESMEnabled
 
 		};
 

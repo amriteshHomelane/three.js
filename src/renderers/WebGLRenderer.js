@@ -113,6 +113,10 @@ function WebGLRenderer( parameters ) {
   this.saoBuffer = null;
   this.bufferSize = new THREE.Vector2(0,0);
 
+  // progressiveESM
+  this.progressiveESMEnabled = true;
+  this.esmBuffer = null;
+
 	// internal properties
 
 	var _this = this,
@@ -1813,6 +1817,7 @@ function WebGLRenderer( parameters ) {
     // sao esm buffer
     p_uniforms.set( _gl, _this, 'saoBuffer' );
     p_uniforms.set( _gl, _this, 'bufferSize' );
+    p_uniforms.set( _gl, _this, 'esmBuffer' );
 
     // skinning uniforms must be set even if material didn't change
 		// auto-setting of texture unit for bone texture must go before other textures
