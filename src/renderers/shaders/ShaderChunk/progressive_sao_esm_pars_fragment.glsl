@@ -6,6 +6,6 @@
     uniform sampler2D saoBuffer;
 #endif
 
-#ifdef PROGRESSIVE_ESM_ENABLED
-    uniform sampler2D esmBuffer;
-#endif
+// #ifdef PROGRESSIVE_ESM_ENABLED
+//     uniform sampler2D esmBuffer;
+// #endif

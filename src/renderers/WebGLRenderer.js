@@ -115,7 +115,6 @@ function WebGLRenderer( parameters ) {
 
   // progressiveESM
   this.progressiveESMEnabled = true;
-  this.esmBuffer = null;
 
 	// internal properties
 
@@ -1817,7 +1816,6 @@ function WebGLRenderer( parameters ) {
     // sao esm buffer
     p_uniforms.set( _gl, _this, 'saoBuffer' );
     p_uniforms.set( _gl, _this, 'bufferSize' );
-    p_uniforms.set( _gl, _this, 'esmBuffer' );
 
     // skinning uniforms must be set even if material didn't change
 		// auto-setting of texture unit for bone texture must go before other textures
@@ -2350,7 +2348,7 @@ function WebGLRenderer( parameters ) {
 					uniforms.shadowBias = light.shadow.bias;
 					uniforms.shadowRadius = light.shadow.radius;
 					uniforms.shadowMapSize = light.shadow.mapSize;
-
+          uniforms.shadowMode = light.shadow.mode;
 				}
 
 				_lights.spotShadowMap[ spotLength ] = shadowMap;
