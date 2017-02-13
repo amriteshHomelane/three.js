@@ -17,6 +17,7 @@ function LightShadow( camera ) {
 	this.map = null;
 	this.matrix = new Matrix4();
 
+  this.mode = 0; // 0 for shadowMap and 1 for external shadowBuffer default is 0
 }
 
 Object.assign( LightShadow.prototype, {

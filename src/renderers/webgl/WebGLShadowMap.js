@@ -135,6 +135,12 @@ function WebGLShadowMap( _renderer, _lights, _objects, capabilities ) {
 
 			}
 
+      if ( shadow !== undefined && shadow.mode === 1 ) {
+
+        return;
+
+      }
+
 			var shadowCamera = shadow.camera;
 
 			_shadowMapSize.copy( shadow.mapSize );

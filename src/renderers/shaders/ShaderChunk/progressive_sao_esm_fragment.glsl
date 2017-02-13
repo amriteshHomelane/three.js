@@ -5,11 +5,3 @@
     reflectedLight.indirectSpecular *= aoValue;
 
 #endif
-
-#ifdef PROGRESSIVE_ESM_ENABLED
-
-    float shadowValue = unpackRGBAToDepth(texture2D( esmBuffer, gl_FragCoord.xy/bufferSize));
-    reflectedLight.directDiffuse  *= shadowValue;
-    reflectedLight.directSpecular *= shadowValue;
-
-#endif

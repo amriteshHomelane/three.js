@@ -187,8 +187,10 @@ function WebGLPrograms( renderer, capabilities ) {
 
 			numClippingPlanes: nClipPlanes,
 			numClipIntersection: nClipIntersection,
+      // TODO: Had to remove lights.shadows.length > 0 because lights.shadows.length == 0 if all lights have mode=1
+      // Original: shadowMapEnabled: renderer.shadowMap.enabled && object.receiveShadow && lights.shadows.length > 0,
 
-			shadowMapEnabled: renderer.shadowMap.enabled && object.receiveShadow && lights.shadows.length > 0,
+			shadowMapEnabled: renderer.shadowMap.enabled && object.receiveShadow,
 			shadowMapType: renderer.shadowMap.type,
 
 			toneMapping: renderer.toneMapping,
