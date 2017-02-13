@@ -56,8 +56,6 @@ IncidentLight directLight;
         // TODO, threejs internal shadows are not working.
         directLight.color *= all( bvec2( true, true ) ) ? getShadow( spotShadowMap[ i ], spotLight.shadowMapSize, spotLight.shadowBias, spotLight.shadowRadius, vSpotShadowCoord[ i ] ) : 1.0;
       else
-      	//directLight.color = vec3(1.0, 0.0, 0);
-
         directLight.color *=unpackRGBAToDepth(texture2D( spotShadowMap[ i ], gl_FragCoord.xy/bufferSize));
 		#endif
 
