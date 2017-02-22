@@ -158,7 +158,8 @@ var UniformsLib = {
             position: {},
             width: {},
             height: {},
-        } }
+        } },
+    rectShadowMap: {value: []},
 
 	},
 
