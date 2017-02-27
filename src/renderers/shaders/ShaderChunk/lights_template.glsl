@@ -92,6 +92,7 @@ IncidentLight directLight;
 	for ( int i = 0; i < NUM_RECT_AREA_LIGHTS; i ++ ) {
 
 		rectAreaLight = rectAreaLights[ i ];
+		rectAreaLight.color *= unpackRGBAToDepth(texture2D( rectShadowMap[ i ], gl_FragCoord.xy/bufferSize));
 		RE_Direct_RectArea( rectAreaLight, geometry, material, reflectedLight );
 
 	}

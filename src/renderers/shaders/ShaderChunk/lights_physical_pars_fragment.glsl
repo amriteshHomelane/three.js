@@ -32,7 +32,7 @@ float clearCoatDHRApprox( const in float roughness, const in float dotNL ) {
         vec3 spec = Rect_Area_Light_Specular_Reflectance(
                 geometry,
                 rectAreaLight.position, rectAreaLight.halfWidth, rectAreaLight.halfHeight,
-                roughness,
+                roughness * roughness,
                 ltcMat, ltcMag );
         vec3 diff = Rect_Area_Light_Diffuse_Reflectance(
                 geometry,
