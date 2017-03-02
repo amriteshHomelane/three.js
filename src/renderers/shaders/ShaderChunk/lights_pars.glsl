@@ -258,8 +258,14 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
 
 		#elif defined( ENVMAP_TYPE_CUBE_UV )
 
-			vec3 queryReflectVec = vec3( flipEnvMap * reflectVec.x, reflectVec.yz );
-			vec4 envMapColor = textureCubeUV(queryReflectVec, BlinnExponentToGGXRoughness(blinnShininessExponent));
+		    #ifdef PARALLAX_REFLECTIONS_ENABLED
+                vec3 hitPoint = getClosestHitPoint(reflectVec, vertexWorldPosition);
+
+                reflectVec = normalize( hitPoint - cubeCameraPos );
+        	#endif
+
+            vec3 queryReflectVec = vec3( flipEnvMap * reflectVec.x, reflectVec.yz );
+            vec4 envMapColor = textureCubeUV(queryReflectVec, BlinnExponentToGGXRoughness(blinnShininessExponent));
 
 		#elif defined( ENVMAP_TYPE_EQUIREC )
 

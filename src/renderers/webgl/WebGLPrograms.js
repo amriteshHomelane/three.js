@@ -34,7 +34,7 @@ function WebGLPrograms( renderer, capabilities ) {
 		"numDirLights", "numPointLights", "numSpotLights", "numHemiLights", "numRectAreaLights",
 		"shadowMapEnabled", "shadowMapType", "toneMapping", 'physicallyCorrectLights',
 		"alphaTest", "doubleSided", "flipSided", "numClippingPlanes", "numClipIntersection", "depthPacking",
-    "progressiveSAOEnabled", "progressiveESMEnabled"
+    "progressiveSAOEnabled", "progressiveESMEnabled", 'enableParallaxReflections'
 	];
 
 
@@ -204,7 +204,8 @@ function WebGLPrograms( renderer, capabilities ) {
 
 			depthPacking: ( material.depthPacking !== undefined ) ? material.depthPacking : false,
       progressiveSAOEnabled : renderer.progressiveSAOEnabled,
-      progressiveESMEnabled : renderer.progressiveESMEnabled
+      progressiveESMEnabled : renderer.progressiveESMEnabled,
+      enableParallaxReflections : renderer.enableParallaxReflections
 
 		};
 

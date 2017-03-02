@@ -12,6 +12,7 @@ uniform float opacity;
 #endif
 
 varying vec3 vViewPosition;
+varying vec3 vertexWorldPosition;
 
 #ifndef FLAT_SHADED
 
@@ -33,6 +34,7 @@ varying vec3 vViewPosition;
 #include <fog_pars_fragment>
 #include <bsdfs>
 #include <cube_uv_reflection_fragment>
+#include <parallax_reflection>
 #include <lights_pars>
 #include <lights_physical_pars_fragment>
 #include <shadowmap_pars_fragment>
