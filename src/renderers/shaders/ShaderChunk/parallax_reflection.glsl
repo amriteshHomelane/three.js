@@ -55,7 +55,8 @@ vec3 getClosestHitPoint (vec3 reflectionDir, vec3 vPositionW) {
         bool intersects = intersection(boundingBoxMinMax[i], boundingBoxMinMax[i+1], reflectedRay, boundingBoxHitPoint);
         if(intersects) {
             vec3 d1 = boundingBoxHitPoint - vPositionW;
-            hitPoint = dot(hitPoint, hitPoint) < dot( d1, d1) ? hitPoint : boundingBoxHitPoint;
+            vec3 d2 = hitPoint - vPositionW;
+            hitPoint = length(d1) < length(d2) ? boundingBoxHitPoint : hitPoint;
         }
     }
 
