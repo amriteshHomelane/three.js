@@ -485,7 +485,7 @@ function WebGLProgram( renderer, code, material, parameters ) {
 
       parameters.progressiveSAOEnabled ? "#define PROGRESSIVE_SAO_ENABLED " : '',
       parameters.progressiveESMEnabled ? "#define PROGRESSIVE_ESM_ENABLED " : '',
-
+      parameters.enableParallaxReflections ? "#define PARALLAX_REFLECTIONS_ENABLED " : '',
 			'\n'
 
 		].filter( filterEmptyLine ).join( '\n' );

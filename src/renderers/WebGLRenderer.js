@@ -116,6 +116,8 @@ function WebGLRenderer( parameters ) {
   // progressiveESM
   this.progressiveESMEnabled = true;
 
+  // parallax reflections
+  this.enableParallaxReflections = true;
 	// internal properties
 
 	var _this = this,
@@ -1816,8 +1818,20 @@ function WebGLRenderer( parameters ) {
 		}
 
     // sao esm buffer
-    p_uniforms.set( _gl, _this, 'saoBuffer' );
-    p_uniforms.set( _gl, _this, 'bufferSize' );
+
+    if(_this.progressiveSAOEnabled) {
+      p_uniforms.set( _gl, _this, 'saoBuffer' );
+    }
+    if(_this.progressiveSAOEnabled || _this.progressiveESMEnabled) {
+      p_uniforms.set(_gl, _this, 'bufferSize');
+    }
+    //parallax reflection
+    if(_this.enableParallaxReflections) {
+      p_uniforms.set( _gl, _this, 'boundingBoxMinMax' );
+      p_uniforms.set( _gl, _this, 'cubeCameraPos' );
+      p_uniforms.set( _gl, _this, 'roomDimensions' );
+      p_uniforms.set( _gl, _this, 'NumBoundingBoxes' );
+    }
 
     // skinning uniforms must be set even if material didn't change
 		// auto-setting of texture unit for bone texture must go before other textures
