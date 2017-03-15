@@ -44,7 +44,7 @@ Object.assign( ImageLoader.prototype, {
 
 		} else {
 
-			var loader = new FileLoader();
+			var loader = new FileLoader(this.manager);
 			loader.setPath( this.path );
 			loader.setResponseType( 'blob' );
 			loader.setWithCredentials( this.withCredentials );
