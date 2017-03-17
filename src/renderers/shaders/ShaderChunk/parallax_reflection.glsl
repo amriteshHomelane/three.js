@@ -29,17 +29,17 @@ bool intersection(const in vec3 bbmin, const in vec3 bbmax, const in Ray r, inou
     tmin = max(tmin, min(ty1, ty2));
     tmax = min(tmax, max(ty1, ty2));
 
-		float tz1 = (bbmin.z - r.origin.z) * r.inv_direction.z;
+	float tz1 = (bbmin.z - r.origin.z) * r.inv_direction.z;
     float tz2 = (bbmax.z - r.origin.z) * r.inv_direction.z;
 
     tmin = max(tmin, min(tz1, tz2));
     tmax = min(tmax, max(tz1, tz2));
 
     if( tmax >= tmin && tmin > 0.0 ) {
-			hitPoint = r.origin + tmin * r.direction;
-			return true;
-		}
-		return false;
+		hitPoint = r.origin + tmin * r.direction;
+		return true;
+	}
+	return false;
 }
 
 vec3 getClosestHitPoint (vec3 reflectionDir, vec3 vPositionW) {
@@ -56,7 +56,7 @@ vec3 getClosestHitPoint (vec3 reflectionDir, vec3 vPositionW) {
         if(intersects) {
             vec3 d1 = boundingBoxHitPoint - vPositionW;
             vec3 d2 = hitPoint - vPositionW;
-            hitPoint = length(d1) < length(d2) ? boundingBoxHitPoint : hitPoint;
+            hitPoint = dot(d1, d1) < dot(d2, d2) ? boundingBoxHitPoint : hitPoint;
         }
     }
 

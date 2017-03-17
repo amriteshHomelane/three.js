@@ -184,7 +184,8 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
 
 			#ifdef TEXTURE_LOD_EXT
 
-				vec4 envMapColor = textureCubeLodEXT( envMap, queryVec, float( maxMIPLevel ) );
+				//vec4 envMapColor = textureCubeLodEXT( envMap, queryVec, float( maxMIPLevel ) );
+   			    vec4 envMapColor = textureCubeLodEXT( envMap, queryVec, 5.0 );
 
 			#else
 
@@ -241,12 +242,25 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
 		float specularMIPLevel = getSpecularMIPLevel( blinnShininessExponent, maxMIPLevel );
 
 		#ifdef ENVMAP_TYPE_CUBE
+             #ifdef PARALLAX_REFLECTIONS_ENABLED
+                vec3 hitPoint = getClosestHitPoint(reflectVec, vertexWorldPosition);
 
+                reflectVec = normalize( hitPoint - cubeCameraPos );
+            #endif
 			vec3 queryReflectVec = vec3( flipEnvMap * reflectVec.x, reflectVec.yz );
+            queryReflectVec.x *= -1.0;
 
 			#ifdef TEXTURE_LOD_EXT
+            const float cubeUV_maxLods3 = log2(256.0 * 0.25) - 3.0;
 
-				vec4 envMapColor = textureCubeLodEXT( envMap, queryReflectVec, specularMIPLevel );
+        	float roughnessVal = BlinnExponentToGGXRoughness(blinnShininessExponent) * cubeUV_maxLods3;
+	        float r1 = floor(roughnessVal);
+	        float r2 = r1 + 1.0;
+	        float t = fract(roughnessVal);
+
+			vec4 envMapColor1 = textureCubeLodEXT( envMap, queryReflectVec, r1 );
+			vec4 envMapColor2 = textureCubeLodEXT( envMap, queryReflectVec, r2 );
+			vec4 envMapColor = mix( envMapColor1, envMapColor2, t );
 
 			#else
 
