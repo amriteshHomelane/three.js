@@ -184,7 +184,7 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
 
 			#ifdef TEXTURE_LOD_EXT
 
-				//vec4 envMapColor = textureCubeLodEXT( envMap, queryVec, float( maxMIPLevel ) );
+				// TODO, replace 5 with the real maxMIPLevel
    			    vec4 envMapColor = textureCubeLodEXT( envMap, queryVec, 5.0 );
 
 			#else
@@ -251,6 +251,7 @@ vec3 getAmbientLightIrradiance( const in vec3 ambientLightColor ) {
             queryReflectVec.x *= -1.0;
 
 			#ifdef TEXTURE_LOD_EXT
+			// TODO: Remove hard coded values for cubeUV_maxLods3.
             const float cubeUV_maxLods3 = log2(256.0 * 0.25) - 3.0;
 
         	float roughnessVal = BlinnExponentToGGXRoughness(blinnShininessExponent) * cubeUV_maxLods3;
