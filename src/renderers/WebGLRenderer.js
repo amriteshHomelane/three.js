@@ -29,6 +29,7 @@ import { WebGLClipping } from './webgl/WebGLClipping';
 import { Frustum } from '../math/Frustum';
 import { Vector4 } from '../math/Vector4';
 import { Color } from '../math/Color';
+import { WebGLDepthPrePass } from './webgl/WebGLDepthPrePass';
 
 /**
  * @author supereggbert / http://www.paulbrunt.co.uk/
@@ -372,6 +373,10 @@ function WebGLRenderer( parameters ) {
 
 	this.shadowMap = shadowMap;
 
+  // depth prepass
+
+  var depthPrepass = new WebGLDepthPrePass( this );
+  this.depthPrepass = depthPrepass;
 
 	// Plugins
 
@@ -1218,6 +1223,8 @@ function WebGLRenderer( parameters ) {
 		}
 
 		//
+
+    depthPrepass.render( opaqueObjects, camera );
 
 		if ( scene.overrideMaterial ) {
 
