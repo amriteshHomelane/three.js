@@ -22,6 +22,7 @@ varying vec3 vertexWorldPosition;
 
 #include <common>
 #include <packing>
+#include <dithering_pars_fragment>
 #include <color_pars_fragment>
 #include <uv_pars_fragment>
 #include <uv2_pars_fragment>
@@ -34,7 +35,6 @@ varying vec3 vertexWorldPosition;
 #include <fog_pars_fragment>
 #include <bsdfs>
 #include <cube_uv_reflection_fragment>
-#include <parallax_reflection>
 #include <lights_pars>
 #include <lights_physical_pars_fragment>
 #include <shadowmap_pars_fragment>
@@ -44,7 +44,6 @@ varying vec3 vertexWorldPosition;
 #include <metalnessmap_pars_fragment>
 #include <logdepthbuf_pars_fragment>
 #include <clipping_planes_pars_fragment>
-#include <progressive_sao_esm_pars_fragment>
 
 void main() {
 
@@ -59,7 +58,6 @@ void main() {
 	#include <color_fragment>
 	#include <alphamap_fragment>
 	#include <alphatest_fragment>
-	#include <specularmap_fragment>
 	#include <roughnessmap_fragment>
 	#include <metalnessmap_fragment>
 	#include <normal_flip>
@@ -72,14 +70,15 @@ void main() {
 
 	// modulation
 	#include <aomap_fragment>
-    #include <progressive_sao_esm_fragment>
+
 	vec3 outgoingLight = reflectedLight.directDiffuse + reflectedLight.indirectDiffuse + reflectedLight.directSpecular + reflectedLight.indirectSpecular + totalEmissiveRadiance;
 
 	gl_FragColor = vec4( outgoingLight, diffuseColor.a );
 
-	#include <premultiplied_alpha_fragment>
 	#include <tonemapping_fragment>
 	#include <encodings_fragment>
 	#include <fog_fragment>
+	#include <premultiplied_alpha_fragment>
+	#include <dithering_fragment>
 
 }

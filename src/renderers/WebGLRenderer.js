@@ -190,6 +190,7 @@ function WebGLRenderer( parameters ) {
 		spotShadowMap: [],
 		spotShadowMatrix: [],
 		rectArea: [],
+			rectAreaTexture: [],
       rectShadowMap: [],
       point: [],
 		pointShadowMap: [],
@@ -1639,6 +1640,7 @@ function WebGLRenderer( parameters ) {
 			uniforms.directionalLights.value = _lights.directional;
 			uniforms.spotLights.value = _lights.spot;
 			uniforms.rectAreaLights.value = _lights.rectArea;
+			uniforms.rectAreaTexture.value = _lights.rectAreaTexture;
 			uniforms.pointLights.value = _lights.point;
 			uniforms.hemisphereLights.value = _lights.hemi;
 
@@ -2405,12 +2407,14 @@ function WebGLRenderer( parameters ) {
 
 				uniforms.halfWidth.applyMatrix4( _matrix42 );
 				uniforms.halfHeight.applyMatrix4( _matrix42 );
+				uniforms.bTextured = (light.areaTexture !== null);
 
 				// TODO (abelnation): RectAreaLight distance?
 				// uniforms.distance = distance;
 
         _lights.rectShadowMap[ rectAreaLength ] = shadowMap;
 				_lights.rectArea[ rectAreaLength ++ ] = uniforms;
+				_lights.rectAreaTexture[ rectAreaLength ] = light.areaTexture;
 
 			} else if ( light.isPointLight ) {
 

@@ -389,7 +389,32 @@ vec3 EdgeVectorFormFactor( const in vec3 v1, const in vec3 v2 ) {
 	return cross(v1, v2)*theta_sintheta;
 }
 
-vec3 integrateLtcBrdfOverRectOptimized( const in GeometricContext geometry, const in mat3 brdfMat, const in vec3 rectPoints[4] ) {
+vec3 FetchDiffuseFilteredTexture(const in sampler2D areaTexture, vec3 p1_, vec3 p2_, vec3 p3_, vec3 p4_, vec3 f)
+{
+  // area light plane basis
+  vec3 V1 = p2_ - p1_;
+  vec3 V2 = p4_ - p1_;
+  vec3 planeOrtho = cross(V1, V2);
+  float planeAreaSquared = dot(planeOrtho, planeOrtho);
+
+ 	vec3 P0 = rayPlaneIntersect(vec3(0.0), normalize(f), p3_, normalize(planeOrtho));
+ 	float planeDistxPlaneArea = dot(P0, P0);
+ 	vec3 P = P0 - p1_;
+
+  // find tex coords of P
+  float dot_V1_V2 = dot(V1,V2);
+  float inv_dot_V1_V1 = 1.0 / dot(V1, V1);
+  vec3 V2_ = V2 - V1 * dot_V1_V2 * inv_dot_V1_V1;
+  vec2 Puv;
+  Puv.y = dot(V2_, P) / dot(V2_, V2_);
+  Puv.x = dot(V1, P)*inv_dot_V1_V1 - dot_V1_V2*inv_dot_V1_V1*Puv.y ;
+
+  // LOD
+  float d = sqrt(planeDistxPlaneArea) / pow(2.0*sqrt(planeAreaSquared), 0.5);
+ 	return texture2DLodEXT(areaTexture, Puv, log(2.0*512.0*d) ).rgb;
+}
+
+vec3 integrateLtcBrdfOverRectOptimized( const in GeometricContext geometry, const in mat3 brdfMat, const in vec3 rectPoints[4], const in sampler2D rectAreaTexture, const in bool bTextured ) {
 
 	vec3 N = geometry.normal;
 	vec3 V = geometry.viewDir;
@@ -433,9 +458,14 @@ vec3 integrateLtcBrdfOverRectOptimized( const in GeometricContext geometry, cons
 	edgeVectorFormFactor += EdgeVectorFormFactor( clippedRect[2], clippedRect[3] );
 	edgeVectorFormFactor += EdgeVectorFormFactor( clippedRect[3], clippedRect[0] );
 
+	vec3 texColor = vec3(1.0);
+
+ 	if( bTextured )
+ 		texColor = FetchDiffuseFilteredTexture(rectAreaTexture, clippedRect[0], clippedRect[1], clippedRect[2], clippedRect[3], edgeVectorFormFactor);
+
 	vec3 Lo_i = vec3( ClippedSphereFormFactor( edgeVectorFormFactor ) );
 
-	return Lo_i * 2.0 * PI;
+	return texColor * Lo_i * 2.0 * PI;
 
 }
 
@@ -443,7 +473,9 @@ vec3 Rect_Area_Light_Specular_Reflectance(
 		const in GeometricContext geometry,
 		const in vec3 lightPos, const in vec3 lightHalfWidth, const in vec3 lightHalfHeight,
 		const in float roughness,
-		const in sampler2D ltcMat, const in sampler2D ltcMag ) {
+		const in sampler2D ltcMat, const in sampler2D ltcMag,
+		const in sampler2D rectAreaTexture,
+		const in bool bTextured) {
 
 	vec3 rectPoints[4];
 	initRectPoints( lightPos, lightHalfWidth, lightHalfHeight, rectPoints );
@@ -464,7 +496,7 @@ vec3 Rect_Area_Light_Specular_Reflectance(
 		vec3( t.w,   0, t.x )
 	);
 
-	vec3 specularReflectance = integrateLtcBrdfOverRectOptimized( geometry, brdfLtcApproxMat, rectPoints );
+	vec3 specularReflectance = integrateLtcBrdfOverRectOptimized( geometry, brdfLtcApproxMat, rectPoints, rectAreaTexture, bTextured );
 	specularReflectance *= brdfLtcScalar;
 
 	return specularReflectance;
@@ -473,13 +505,15 @@ vec3 Rect_Area_Light_Specular_Reflectance(
 
 vec3 Rect_Area_Light_Diffuse_Reflectance(
 		const in GeometricContext geometry,
-		const in vec3 lightPos, const in vec3 lightHalfWidth, const in vec3 lightHalfHeight ) {
+		const in vec3 lightPos, const in vec3 lightHalfWidth, const in vec3 lightHalfHeight,
+		const in sampler2D rectAreaTexture,
+		const in bool bTextured ) {
 
 	vec3 rectPoints[4];
 	initRectPoints( lightPos, lightHalfWidth, lightHalfHeight, rectPoints );
 
 	mat3 diffuseBrdfMat = mat3(1);
-	vec3 diffuseReflectance = integrateLtcBrdfOverRectOptimized( geometry, diffuseBrdfMat, rectPoints );
+	vec3 diffuseReflectance = integrateLtcBrdfOverRectOptimized( geometry, diffuseBrdfMat, rectPoints, rectAreaTexture, bTextured );
 
 	return diffuseReflectance;
 

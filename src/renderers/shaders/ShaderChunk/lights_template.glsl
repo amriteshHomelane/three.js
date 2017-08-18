@@ -1,17 +1,17 @@
-//
-// This is a template that can be used to light a material, it uses pluggable RenderEquations (RE)
-//   for specific lighting scenarios.
-//
-// Instructions for use:
-//  - Ensure that both RE_Direct, RE_IndirectDiffuse and RE_IndirectSpecular are defined
-//  - If you have defined an RE_IndirectSpecular, you need to also provide a Material_LightProbeLOD. <---- ???
-//  - Create a material parameter that is to be passed as the third parameter to your lighting functions.
-//
-// TODO:
-//  - Add area light support.
-//  - Add sphere light support.
-//  - Add diffuse light probe (irradiance cubemap) support.
-//
+/**
+ * This is a template that can be used to light a material, it uses pluggable
+ * RenderEquations (RE)for specific lighting scenarios.
+ *
+ * Instructions for use:
+ * - Ensure that both RE_Direct, RE_IndirectDiffuse and RE_IndirectSpecular are defined
+ * - If you have defined an RE_IndirectSpecular, you need to also provide a Material_LightProbeLOD. <---- ???
+ * - Create a material parameter that is to be passed as the third parameter to your lighting functions.
+ *
+ * TODO:
+ * - Add area light support.
+ * - Add sphere light support.
+ * - Add diffuse light probe (irradiance cubemap) support.
+ */
 
 GeometricContext geometry;
 
@@ -52,11 +52,7 @@ IncidentLight directLight;
 		getSpotDirectLightIrradiance( spotLight, geometry, directLight );
 
 		#ifdef USE_SHADOWMAP
-      if(spotLight.shadowMode == 0)
-        // TODO, threejs internal shadows are not working.
-        directLight.color *= all( bvec2( true, true ) ) ? getShadow( spotShadowMap[ i ], spotLight.shadowMapSize, spotLight.shadowBias, spotLight.shadowRadius, vSpotShadowCoord[ i ] ) : 1.0;
-      else
-        directLight.color *=unpackRGBAToDepth(texture2D( spotShadowMap[ i ], gl_FragCoord.xy/bufferSize));
+		directLight.color *= all( bvec2( spotLight.shadow, directLight.visible ) ) ? getShadow( spotShadowMap[ i ], spotLight.shadowMapSize, spotLight.shadowBias, spotLight.shadowRadius, vSpotShadowCoord[ i ] ) : 1.0;
 		#endif
 
 		RE_Direct( directLight, geometry, material, reflectedLight );
@@ -92,8 +88,7 @@ IncidentLight directLight;
 	for ( int i = 0; i < NUM_RECT_AREA_LIGHTS; i ++ ) {
 
 		rectAreaLight = rectAreaLights[ i ];
-		rectAreaLight.color *= unpackRGBAToDepth(texture2D( rectShadowMap[ i ], gl_FragCoord.xy/bufferSize));
-		RE_Direct_RectArea( rectAreaLight, geometry, material, reflectedLight );
+		RE_Direct_RectArea( rectAreaLight, geometry, material, reflectedLight, rectAreaTexture[ i ], rectAreaLight.bTextured );
 
 	}
 
@@ -130,7 +125,7 @@ IncidentLight directLight;
 	#if defined( USE_ENVMAP ) && defined( PHYSICAL ) && ( defined( ENVMAP_TYPE_CUBE_UV ) || defined( ENVMAP_TYPE_CUBE ) )
 
 		// TODO, replace 8 with the real maxMIPLevel
-	 	irradiance += getLightProbeIndirectIrradiance( /*lightProbe,*/ geometry, 8 );
+		irradiance += getLightProbeIndirectIrradiance( /*lightProbe,*/ geometry, 8 );
 
 	#endif
 

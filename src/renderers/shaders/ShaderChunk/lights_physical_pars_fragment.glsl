@@ -22,7 +22,7 @@ float clearCoatDHRApprox( const in float roughness, const in float dotNL ) {
 }
 
 #if NUM_RECT_AREA_LIGHTS > 0
-	void RE_Direct_RectArea_Physical( const in RectAreaLight rectAreaLight, const in GeometricContext geometry, const in PhysicalMaterial material, inout ReflectedLight reflectedLight ) {
+	void RE_Direct_RectArea_Physical( const in RectAreaLight rectAreaLight, const in GeometricContext geometry, const in PhysicalMaterial material, inout ReflectedLight reflectedLight, const in sampler2D rectAreaTexture, const in bool bTextured ) {
 
 		vec3 matDiffColor = material.diffuseColor;
 		vec3 matSpecColor = material.specularColor;
@@ -33,10 +33,10 @@ float clearCoatDHRApprox( const in float roughness, const in float dotNL ) {
 				geometry,
 				rectAreaLight.position, rectAreaLight.halfWidth, rectAreaLight.halfHeight,
 				roughness * roughness,
-				ltcMat, ltcMag );
+				ltcMat, ltcMag, rectAreaTexture, bTextured );
 		vec3 diff = Rect_Area_Light_Diffuse_Reflectance(
 				geometry,
-				rectAreaLight.position, rectAreaLight.halfWidth, rectAreaLight.halfHeight );
+				rectAreaLight.position, rectAreaLight.halfWidth, rectAreaLight.halfHeight, rectAreaTexture, bTextured );
 
 		// division by 2 * PI is inside the above calls. This is essential as Eq (11) is having this normalization.
 		reflectedLight.directSpecular += lightColor * matSpecColor * spec;
