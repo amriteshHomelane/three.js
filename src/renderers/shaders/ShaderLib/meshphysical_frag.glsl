@@ -35,6 +35,7 @@ varying vec3 vertexWorldPosition;
 #include <fog_pars_fragment>
 #include <bsdfs>
 #include <cube_uv_reflection_fragment>
+#include <parallax_reflection>
 #include <lights_pars>
 #include <lights_physical_pars_fragment>
 #include <shadowmap_pars_fragment>
@@ -44,6 +45,7 @@ varying vec3 vertexWorldPosition;
 #include <metalnessmap_pars_fragment>
 #include <logdepthbuf_pars_fragment>
 #include <clipping_planes_pars_fragment>
+#include <progressive_sao_esm_pars_fragment>
 
 void main() {
 
@@ -57,6 +59,7 @@ void main() {
 	#include <map_fragment>
 	#include <color_fragment>
 	#include <alphamap_fragment>
+	#include <specularmap_fragment>
 	#include <alphatest_fragment>
 	#include <roughnessmap_fragment>
 	#include <metalnessmap_fragment>
@@ -70,6 +73,7 @@ void main() {
 
 	// modulation
 	#include <aomap_fragment>
+	#include <progressive_sao_esm_fragment>
 
 	vec3 outgoingLight = reflectedLight.directDiffuse + reflectedLight.indirectDiffuse + reflectedLight.directSpecular + reflectedLight.indirectSpecular + totalEmissiveRadiance;
 

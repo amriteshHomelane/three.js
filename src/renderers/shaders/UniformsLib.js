@@ -129,6 +129,7 @@ var UniformsLib = {
 		} },
 
 		spotShadowMap: { value: [] },
+		rectShadowMap: { value: [] },
 		spotShadowMatrix: { value: [] },
 
 		pointLights: { value: [], properties: {

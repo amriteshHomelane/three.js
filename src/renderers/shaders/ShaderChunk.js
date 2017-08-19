@@ -36,6 +36,7 @@ import gradientmap_pars_fragment from './ShaderChunk/gradientmap_pars_fragment.g
 import lightmap_fragment from './ShaderChunk/lightmap_fragment.glsl';
 import lightmap_pars_fragment from './ShaderChunk/lightmap_pars_fragment.glsl';
 import lights_lambert_vertex from './ShaderChunk/lights_lambert_vertex.glsl';
+import parallax_reflection from './ShaderChunk/parallax_reflection.glsl';
 import lights_pars from './ShaderChunk/lights_pars.glsl';
 import lights_phong_fragment from './ShaderChunk/lights_phong_fragment.glsl';
 import lights_phong_pars_fragment from './ShaderChunk/lights_phong_pars_fragment.glsl';
@@ -61,6 +62,8 @@ import normalmap_pars_fragment from './ShaderChunk/normalmap_pars_fragment.glsl'
 import packing from './ShaderChunk/packing.glsl';
 import premultiplied_alpha_fragment from './ShaderChunk/premultiplied_alpha_fragment.glsl';
 import project_vertex from './ShaderChunk/project_vertex.glsl';
+import progressive_sao_esm_fragment from './ShaderChunk/progressive_sao_esm_fragment.glsl';
+import progressive_sao_esm_pars_fragment from './ShaderChunk/progressive_sao_esm_pars_fragment.glsl';
 import dithering_fragment from './ShaderChunk/dithering_fragment.glsl';
 import dithering_pars_fragment from './ShaderChunk/dithering_pars_fragment.glsl';
 import roughnessmap_fragment from './ShaderChunk/roughnessmap_fragment.glsl';
@@ -84,7 +87,6 @@ import uv2_pars_fragment from './ShaderChunk/uv2_pars_fragment.glsl';
 import uv2_pars_vertex from './ShaderChunk/uv2_pars_vertex.glsl';
 import uv2_vertex from './ShaderChunk/uv2_vertex.glsl';
 import worldpos_vertex from './ShaderChunk/worldpos_vertex.glsl';
-
 import cube_frag from './ShaderLib/cube_frag.glsl';
 import cube_vert from './ShaderLib/cube_vert.glsl';
 import depth_frag from './ShaderLib/depth_frag.glsl';
@@ -149,6 +151,7 @@ export var ShaderChunk = {
 	lightmap_fragment: lightmap_fragment,
 	lightmap_pars_fragment: lightmap_pars_fragment,
 	lights_lambert_vertex: lights_lambert_vertex,
+	parallax_reflection: parallax_reflection,
 	lights_pars: lights_pars,
 	lights_phong_fragment: lights_phong_fragment,
 	lights_phong_pars_fragment: lights_phong_pars_fragment,
@@ -174,6 +177,8 @@ export var ShaderChunk = {
 	packing: packing,
 	premultiplied_alpha_fragment: premultiplied_alpha_fragment,
 	project_vertex: project_vertex,
+	progressive_sao_esm_fragment: progressive_sao_esm_fragment,
+	progressive_sao_esm_pars_fragment: progressive_sao_esm_pars_fragment,
 	dithering_fragment: dithering_fragment,
 	dithering_pars_fragment: dithering_pars_fragment,
 	roughnessmap_fragment: roughnessmap_fragment,

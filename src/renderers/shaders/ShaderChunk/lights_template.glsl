@@ -52,7 +52,12 @@ IncidentLight directLight;
 		getSpotDirectLightIrradiance( spotLight, geometry, directLight );
 
 		#ifdef USE_SHADOWMAP
-		directLight.color *= all( bvec2( spotLight.shadow, directLight.visible ) ) ? getShadow( spotShadowMap[ i ], spotLight.shadowMapSize, spotLight.shadowBias, spotLight.shadowRadius, vSpotShadowCoord[ i ] ) : 1.0;
+		if(spotLight.shadowMode == 0)
+			// TODO, threejs internal shadows are not working.
+			directLight.color *= all( bvec2( true, true ) ) ? getShadow( spotShadowMap[ i ], spotLight.shadowMapSize, spotLight.shadowBias, spotLight.shadowRadius, vSpotShadowCoord[ i ] ) : 1.0;
+		else
+			directLight.color *=unpackRGBAToDepth(texture2D( spotShadowMap[ i ], gl_FragCoord.xy/bufferSize));
+
 		#endif
 
 		RE_Direct( directLight, geometry, material, reflectedLight );
@@ -88,6 +93,7 @@ IncidentLight directLight;
 	for ( int i = 0; i < NUM_RECT_AREA_LIGHTS; i ++ ) {
 
 		rectAreaLight = rectAreaLights[ i ];
+		rectAreaLight.color *= unpackRGBAToDepth(texture2D( rectShadowMap[ i ], gl_FragCoord.xy/bufferSize));
 		RE_Direct_RectArea( rectAreaLight, geometry, material, reflectedLight, rectAreaTexture[ i ], rectAreaLight.bTextured );
 
 	}

@@ -18,6 +18,7 @@ varying vec3 vertexWorldPosition;
 #include <morphtarget_pars_vertex>
 #include <skinning_pars_vertex>
 #include <shadowmap_pars_vertex>
+#include <specularmap_pars_fragment>
 #include <logdepthbuf_pars_vertex>
 #include <clipping_planes_pars_vertex>
 

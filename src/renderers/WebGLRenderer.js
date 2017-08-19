@@ -191,7 +191,7 @@ function WebGLRenderer( parameters ) {
 		spotShadowMatrix: [],
 		rectArea: [],
 			rectAreaTexture: [],
-      rectShadowMap: [],
+			rectShadowMap: [],
       point: [],
 		pointShadowMap: [],
 		pointShadowMatrix: [],
