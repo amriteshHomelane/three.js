@@ -411,7 +411,7 @@ vec3 FetchDiffuseFilteredTexture(const in sampler2D areaTexture, vec3 p1_, vec3 
 
   // LOD
   float d = sqrt(planeDistxPlaneArea) / pow(2.0*sqrt(planeAreaSquared), 0.5);
- 	return texture2DLodEXT(areaTexture, Puv, log(2.0*512.0*d) ).rgb;
+ 	return texture2DLodEXT(areaTexture, Puv, log(2.0*2048.0*d) ).rgb;
 }
 
 vec3 integrateLtcBrdfOverRectOptimized( const in GeometricContext geometry, const in mat3 brdfMat, const in vec3 rectPoints[4], const in sampler2D rectAreaTexture, const in bool bTextured ) {
@@ -435,6 +435,13 @@ vec3 integrateLtcBrdfOverRectOptimized( const in GeometricContext geometry, cons
 	clippedRect[1] = brdfWrtSurface * ( rectPoints[1] - P );
 	clippedRect[2] = brdfWrtSurface * ( rectPoints[2] - P );
 	clippedRect[3] = brdfWrtSurface * ( rectPoints[3] - P );
+
+	vec3 coordsOrig[4];
+	coordsOrig[0] = clippedRect[0];
+	coordsOrig[1] = clippedRect[1];
+	coordsOrig[2] = clippedRect[2];
+	coordsOrig[3] = clippedRect[3];
+
 
 	// Find light normal
 	vec3 v1 = clippedRect[1] - clippedRect[0];
@@ -461,7 +468,7 @@ vec3 integrateLtcBrdfOverRectOptimized( const in GeometricContext geometry, cons
 	vec3 texColor = vec3(1.0);
 
  	if( bTextured )
- 		texColor = FetchDiffuseFilteredTexture(rectAreaTexture, clippedRect[0], clippedRect[1], clippedRect[2], clippedRect[3], edgeVectorFormFactor);
+ 		texColor = FetchDiffuseFilteredTexture(rectAreaTexture, coordsOrig[0], coordsOrig[1], coordsOrig[2], coordsOrig[3], edgeVectorFormFactor);
 
 	vec3 Lo_i = vec3( ClippedSphereFormFactor( edgeVectorFormFactor ) );
 

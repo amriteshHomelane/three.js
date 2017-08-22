@@ -29,6 +29,11 @@ function WebGLProperties() {
 			delete properties[ object.uuid ];
 
 		},
+		remove: function ( object ) {
+
+			delete properties[ object.uuid ];
+
+		},
 
 		clear: function () {
 

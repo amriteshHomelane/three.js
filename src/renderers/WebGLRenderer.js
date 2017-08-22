@@ -2413,8 +2413,9 @@ function WebGLRenderer( parameters ) {
 				// uniforms.distance = distance;
 
         _lights.rectShadowMap[ rectAreaLength ] = shadowMap;
-				_lights.rectArea[ rectAreaLength ++ ] = uniforms;
 				_lights.rectAreaTexture[ rectAreaLength ] = light.areaTexture;
+				_lights.rectArea[ rectAreaLength] = uniforms;
+				rectAreaLength++;
 
 			} else if ( light.isPointLight ) {
 
