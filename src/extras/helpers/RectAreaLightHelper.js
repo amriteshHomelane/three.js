@@ -18,7 +18,7 @@ function RectAreaLightHelper( light ) {
 	this.light = light;
 	this.light.updateMatrixWorld();
 
-	this.materialFront = new MeshStandardMaterial( {
+	this.materialFront = new MeshBasicMaterial( {
 		color: light.color,
 		fog: false
 	} );
