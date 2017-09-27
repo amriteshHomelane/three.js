@@ -411,7 +411,15 @@ vec3 FetchDiffuseFilteredTexture(const in sampler2D areaTexture, vec3 p1_, vec3 
 
   // LOD
   float d = sqrt(planeDistxPlaneArea) / pow(2.0*sqrt(planeAreaSquared), 0.5);
- 	return texture2DLodEXT(areaTexture, Puv, log(2.0*2048.0*d) ).rgb;
+	vec3 envMapColor;
+
+	#ifdef TEXTURE_LOD_EXT
+		envMapColor = texture2DLodEXT(areaTexture, Puv, log(2.0*2048.0*d) ).rgb;
+	#else
+		envMapColor = texture2D(areaTexture, Puv, log(2.0*2048.0*d) ).rgb;
+	#endif
+
+	return envMapColor;
 }
 
 vec3 integrateLtcBrdfOverRectOptimized( const in GeometricContext geometry, const in mat3 brdfMat, const in vec3 rectPoints[4], const in sampler2D rectAreaTexture, const in bool bTextured ) {
