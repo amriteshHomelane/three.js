@@ -28,6 +28,7 @@
   "scripts": {
     "build": "rollup -c",
     "build-uglify": "rollup -c && uglifyjs build/three.js -cm --preamble \"// threejs.org/license\" > build/three.min.js",
+    "publish": "rollup -c && uglifyjs build/three.js -cm --preamble \"// threejs.org/license\" > build/three.min.js && node publish.js",
     "build-closure": "rollup -c && java -jar utils/build/compiler/closure-compiler-v20160713.jar --warning_level=VERBOSE --jscomp_off=globalThis --jscomp_off=checkTypes --externs utils/build/externs.js --language_in=ECMASCRIPT5_STRICT --js build/three.js --js_output_file build/three.min.js",
     "dev": "rollup -c -w",
     "lint": "eslint src",
@@ -50,6 +51,7 @@
     "eslint-config-mdcs": "^4.2.2",
     "rollup": "^0.36.3",
     "rollup-watch": "^2.5.0",
+    "s3": "^4.4.0",
     "uglify-js": "^2.6.0"
   }
 }
