@@ -171,15 +171,8 @@ var UniformsLib = {
 			color: {},
 			position: {},
 			width: {},
-<<<<<<< HEAD
-			height: {},
-			bTextured: {},
-		} },
-		rectAreaTexture: { value: [] }
-=======
 			height: {}
 		} }
->>>>>>> b1a13ffbbcd40520da6f683f8c06f11a63031997
 
 	},
 

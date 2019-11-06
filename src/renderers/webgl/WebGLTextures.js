@@ -402,16 +402,10 @@ function WebGLTextures( _gl, extensions, state, properties, capabilities, utils,
 					if ( ! isCompressed ) {
 
 						if ( isDataTexture ) {
-
 							state.texImage2D( _gl.TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, glInternalFormat, cubeImage[ i ].width, cubeImage[ i ].height, 0, glFormat, glType, cubeImage[ i ].data );
-
-              }
 						} else {
-
 							state.texImage2D( _gl.TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, glInternalFormat, glFormat, glType, cubeImage[ i ] );
-
 						}
-
 					} else {
 
 						var mipmap, mipmaps = cubeImage[ i ].mipmaps;
