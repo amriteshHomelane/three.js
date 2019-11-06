@@ -5,3 +5,8 @@ node_modules
 .idea/
 build/
 releaseConfig.js
+.vscode/
+npm-debug.log
+.jshintrc
+.vs/
+test/unit/three.*.unit.js
